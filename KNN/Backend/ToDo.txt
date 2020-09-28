@@ -1,0 +1,7 @@
+- ReadCSV converts to vector<vector<double>> for DataManipulator or to vector<Data> for use with algorithm
+- implement DataManipulator class which handles manipulation of the vector<vector<double>> from ReadCSV, from there WriteCSV can write it to a file and save
+- then ReadCSV can read it in and convert it to vector<Data> for use with algorithm
+- implement WriteCSV class
+- create github account and get familiar with git workflow
+- write GUI to use KNN algorithm (load labeled data, load unlabeled, choose amount of neighbours, run algorithm, clear console)
+- write GUI to convert data into right format (load data, manipulate data, save data)
