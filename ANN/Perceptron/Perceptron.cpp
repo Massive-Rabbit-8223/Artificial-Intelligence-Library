@@ -45,19 +45,19 @@ void Perceptron::train(){
 }
 
 void Perceptron::propagateForward(){
-
+    // to be continued
 }
 
 void Perceptron::calcErrors(){
-
+    // to be continued
 }
 
 void Perceptron::propagateBackward(){
-    
+    // to be continued
 }
 
 void Perceptron::updateWeights(){
-
+    // to be continued
 }
 
 void Perceptron::stdVectorToEigenMatrix(MatrixXd &mat, const std::vector<double> &vec){
