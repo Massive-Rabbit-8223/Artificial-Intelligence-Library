@@ -13,8 +13,8 @@ Perceptron::Perceptron(std::vector<int> neuronsPerLayer, int numEpochs){
     for (int i=0; i < neuronsPerLayer.size(); ++i){
         if (i+1 < neuronsPerLayer.size()){
             this->weights_.push_back(MatrixXd::Random(neuronsPerLayer.at(i), neuronsPerLayer.at(i+1)));     // initialize size of weight-matrices with right dimensions and random values between -1 and 1
-            this->layers_.push_back(MatrixXd::Random(1, neuronsPerLayer.at(i)));    // initialize amount of neurons per layer 
         }
+        this->layers_.push_back(MatrixXd::Random(1, neuronsPerLayer.at(i)));    // initialize amount of neurons per layer 
     }
     //std::cout << "constructor finished" << std::endl;
 }
@@ -30,7 +30,7 @@ void Perceptron::train(){
     for (int i=0; i < this->numEpochs_; ++i){
         for (Data &example : this->trainingsData_){
             if (example.features.size() == this->layers_.at(0).cols()){
-                stdVectorToEigenMatrix(this->layers_.at(0), example.features);      // sets the matrix of the input to the values of the current data point
+                stdVectorToEigenMatrix(this->layers_.at(0), example.features);      // sets the matrix of the input layer to the values of the current data point
                 this->propagateForward();
                 this->calcErrors();
                 this->propagateBackward();
@@ -45,7 +45,19 @@ void Perceptron::train(){
 }
 
 void Perceptron::propagateForward(){
-    // to be continued
+    std::vector<MatrixXd>::iterator layerIteratorOutput = this->layers_.begin()+1;
+    std::vector<MatrixXd>::iterator layerIteratorInput = this->layers_.begin();
+
+    for (std::vector<MatrixXd>::iterator weightIterator = this->weights_.begin(); weightIterator < this->weights_.end(); ++weightIterator){
+        std::cout << "Matrix: " << *weightIterator << std::endl;
+        std::cout << "Layer: " << *layerIteratorOutput << std::endl << std::endl;
+
+        *layerIteratorOutput = *layerIteratorInput * *weightIterator;
+        std::cout << "Updated Layer: " << *layerIteratorOutput << std::endl << std::endl; 
+
+        ++layerIteratorInput; 
+        ++layerIteratorOutput;
+    }
 }
 
 void Perceptron::calcErrors(){

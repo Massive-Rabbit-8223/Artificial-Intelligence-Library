@@ -20,9 +20,9 @@ int main()
   fakeData.push_back(fakePoint1);
   fakeData.push_back(fakePoint2);
 
-  std::vector<int> neuronsPerLayer = {3, 3, 2, 1};
+  std::vector<int> neuronsPerLayer = {3, 30, 20, 10};
 
-  Perceptron model(neuronsPerLayer, 10);
+  Perceptron model(neuronsPerLayer, 1);
   model.setTrainingsData(fakeData);
   model.train();
 }
