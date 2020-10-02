@@ -30,7 +30,7 @@ class Perceptron{
 
     private:
         void propagateForward();
-        void calcErrors();
+        void calcErrors(int assignedClass);
         void propagateBackward();
         void updateWeights();
         void stdVectorToEigenMatrix(MatrixXd &mat, const std::vector<double> &vec);

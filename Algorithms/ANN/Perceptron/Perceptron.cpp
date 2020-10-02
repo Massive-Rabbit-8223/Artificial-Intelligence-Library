@@ -1,9 +1,11 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <math.h>     /* exp */
 
 #include "Perceptron.hpp"
 #include "../../../ExternalLibs/eigen-3.3.7/Eigen/Dense"
+
 
 using namespace Eigen;
 
@@ -32,7 +34,7 @@ void Perceptron::train(){
             if (example.features.size() == this->layers_.at(0).cols()){
                 stdVectorToEigenMatrix(this->layers_.at(0), example.features);      // sets the matrix of the input layer to the values of the current data point
                 this->propagateForward();
-                this->calcErrors();
+                this->calcErrors(example.assignedClass);
                 this->propagateBackward();
                 this->updateWeights();
             }
@@ -54,14 +56,22 @@ void Perceptron::propagateForward(){
 
         *layerIteratorOutput = *layerIteratorInput * *weightIterator;
         std::cout << "Updated Layer: " << *layerIteratorOutput << std::endl << std::endl; 
+        for (int i=0; i < (*layerIteratorOutput).size(); ++i){
+            (*layerIteratorOutput)(0, i) = this->sigmoid((*layerIteratorOutput)(0, i));
+        }
+        //(*layerIteratorOutput).unaryExpr(std::ptr_fun(sigmoid));
+
+        std::cout << "Updated Layer: " << *layerIteratorOutput << std::endl << std::endl; 
 
         ++layerIteratorInput; 
         ++layerIteratorOutput;
     }
 }
 
-void Perceptron::calcErrors(){
-    // to be continued
+void Perceptron::calcErrors(int assignedClass){
+    double error = this->layers_.back()(0, 0) - (double) assignedClass; // hardcoded for only one classification node
+    // deltas for neurons needs to be implemented
+    // delta * weights_transpose
 }
 
 void Perceptron::propagateBackward(){
@@ -70,6 +80,10 @@ void Perceptron::propagateBackward(){
 
 void Perceptron::updateWeights(){
     // to be continued
+}
+
+double Perceptron::sigmoid(double x){
+    return 1 / (1 + exp(-x));
 }
 
 void Perceptron::stdVectorToEigenMatrix(MatrixXd &mat, const std::vector<double> &vec){
